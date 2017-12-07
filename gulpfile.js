@@ -3,24 +3,24 @@ const sass = require('gulp-sass');
 const browserSync = require('browser-sync').create();
 
 gulp.task('sass', function(){
-	gulp.src('sass/main.sass')
+	gulp.src('./sass/*.+(sass|scss)')
 		.pipe(sass())
-		.pipe(gulp.dest('css'))
+		.pipe(gulp.dest('./css'))
 		.pipe(browserSync.reload({
 			stream: true
 		}));
 });
 
-gulp.task('browser-sync', function(){
+gulp.task('browserSync', function(){
 	browserSync.init({
 		server: {
-			baseDir: "wikipedia-viewer"
+			baseDir: "./"
 		}
 	});
 });
 
-gulp.task('watch',['browserSync', 'sass'] function(){
-	gulp.watch('sass/main.sass', ['sass']);
-	gulp.watch('js/main.js', browserSync.reload);
+gulp.task('start',['browserSync', 'sass'], function(){
+	gulp.watch('./sass/*.+(sass|scss)', ['sass']);
+	gulp.watch('./js/main.js', browserSync.reload);
 	gulp.watch('index.html', browserSync.reload);
 });
