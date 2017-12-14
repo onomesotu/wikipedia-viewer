@@ -1,14 +1,31 @@
 
-const normalSearch = document.getElementsByClassName('buttons__search');
+const normalSearchButton = document.getElementsByClassName('buttons__search');
 
-normalSearch.addEventListener('click', ajaxCall, true);
+normalSearchButton[0].addEventListener('click', makeCORSRequest, false);
 
-function ajaxCall(e){
+function createCORSRequest(method, url) {
+	var request = new XMLHttpRequest();
+	if ('withCredentials' in request){
+		request.open(method, url, true);
+	} else if (typeof XDomainRequest != 'undefined'){
+		request = new XDomainRequest();
+		request.open(method, url);
+	} else {
+		request = null;
+	}
+	return request;
+}
+
+function makeCORSRequest(e) {
 	e.preventDefault();
 	const inputText = document.getElementById('search').value;
-	const wikipediaAPI = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + inputText + '&limit=2&namespace=0&format=jsonfm';
-	const request = new XMLHttpRequest();
-	request.open('GET', wikipediaAPI, true);
+	const wikipediaAPI = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + inputText + '&limit=10&namespace=0&origin=*&format=jsonfm';
+	const request = createCORSRequest('GET', wikipediaAPI);
+	if(!request) {
+		console.log('CORS not supported');
+		return;
+	}
+
 	request.onload = function(e){
 		if(this.readyState === 4){
 			if(this.status >= 200 && this.status <= 400){
@@ -18,8 +35,10 @@ function ajaxCall(e){
 			}
 		}
 	};
+
 	request.onerror = function(e){
-		console.error(xhr.statusText);
+		console.log(request.statusText);
 	};
+
 	request.send(null);
 }
