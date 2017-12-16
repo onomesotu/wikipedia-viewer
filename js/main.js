@@ -18,27 +18,45 @@ function createCORSRequest(method, url) {
 
 function makeCORSRequest(e) {
 	e.preventDefault();
-	const inputText = document.getElementById('search').value;
-	const wikipediaAPI = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + inputText + '&limit=10&namespace=0&origin=*&format=jsonfm';
-	const request = createCORSRequest('GET', wikipediaAPI);
-	if(!request) {
-		console.log('CORS not supported');
+	const inputText = document.getElementById('search').value.trim();
+	if (!inputText) {
 		return;
-	}
-
-	request.onload = function(e){
-		if(this.readyState === 4){
-			if(this.status >= 200 && this.status <= 400){
-				console.log(this.responseText);
-			} else {
-				console.error(this.statusText);
-			}
+	} else {
+		const wikipediaAPI = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + inputText + '&limit=10&namespace=0&origin=*&format=json';
+		const request = createCORSRequest('GET', wikipediaAPI);
+		if(!request) {
+			console.log('CORS not supported');
+			return;
 		}
-	};
 
-	request.onerror = function(e){
-		console.log(request.statusText);
-	};
+		request.onload = function(e){
+			if(this.readyState === 4){
+				if(this.status >= 200 && this.status <= 400){
+					return success(this.responseText);
+				} else {
+					console.error(this.statusText);
+				}
+			}
+		};
 
-	request.send(null);
+		request.onerror = function(e){
+			console.log(request.statusText);
+		};
+
+		request.send(null);
+	}
+	
 }
+
+ function success(responseText){
+ 	var response = JSON.parse(responseText);
+ 	
+ 	for(var i = 0; i < 10; ++i) {
+ 		let element = document.createElement('a');
+ 		element.setAttribute('href', response[3][i]);
+ 		let block_div = '<div><h3>' + response[1][i] + '</h3><p>' + response[2][i] + '</p></div></a>';
+ 		element.innerHTML = block_div;
+ 		document.body.appendChild(element);
+ 	}
+ }
+
