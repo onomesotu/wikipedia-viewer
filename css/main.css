@@ -363,3 +363,7 @@ html {
 
 .container {
   max-width: 1200px; }
+
+.header .header_img {
+  height: 40px;
+  width: 40px; }
