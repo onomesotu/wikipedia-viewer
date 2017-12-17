@@ -44,8 +44,7 @@ function makeCORSRequest(e) {
 		};
 
 		request.send(null);
-	}
-	
+	}	
 }
 
  function success(responseText){
@@ -54,9 +53,12 @@ function makeCORSRequest(e) {
  	for(var i = 0; i < 10; ++i) {
  		let element = document.createElement('a');
  		element.setAttribute('href', response[3][i]);
- 		let block_div = '<div><h3>' + response[1][i] + '</h3><p>' + response[2][i] + '</p></div></a>';
+ 		element.setAttribute('class', 'main__anchors');
+ 		element.setAttribute('target', '_blank');
+ 		let block_div = '<div><h3>' + response[1][i] + '</h3><p class="main__paragraphs">' + response[2][i] + '</p></div></a>';
  		element.innerHTML = block_div;
- 		document.body.appendChild(element);
+ 		let div = document.getElementById('main');
+ 		div.appendChild(element);
  	}
  }
 
