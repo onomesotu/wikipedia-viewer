@@ -13,7 +13,7 @@
 	<div class="header  text-center">
 		<div class="container">
 			<div class="row">
-				<img src="./images/search.svg" alt="magnifying glass" class="header_img"><h1>Wikipedia Viewer</h1>
+				<h1 class="header__title"><img src="./images/search.svg" alt="A search glass" class="header__img">Wikipedia Viewer</h1>
 			</div>
 			<form>
 				<div class="form-group">
@@ -22,13 +22,18 @@
 			</form>
 			<div class="row buttons">
 				<button type="submit" class="btn btn-default btn-lg buttons__search">Wiki Search</button>
-				<button type="submit" class="btn btn-default btn-lg buttons__random__search">Random Topic</button>
+				<a href="https://en.wikipedia.org/wiki/Special:Random" class="btn btn-default btn-lg buttons__random__search" target="_blank">Random Topic</a>
 			</div>
 		</div>
 	</div>
 	<div class="main">
-		<div class="container">
+		<div class="container" id="main">
 			
+		</div>
+	</div>
+	<div class="footer text-center">
+		<div class="container">
+			<p><strong>&copy;2017 Onome Sotu | All Rights Reserved</strong></p>
 		</div>
 	</div>
 	<script type="text/javascript" src="js/main.js"></script>
