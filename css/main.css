@@ -364,6 +364,24 @@ html {
 .container {
   max-width: 1200px; }
 
-.header .header_img {
+.header .header__title {
+  margin-top: 200px; }
+
+.header .header__img {
   height: 40px;
   width: 40px; }
+
+.main .main__anchors {
+  color: inherit;
+  padding: 10px; }
+  .main .main__anchors:hover {
+    text-decoration: none; }
+
+.main .main__paragraphs {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3DD0F2; }
+
+.footer {
+  position: relative;
+  text-align: center;
+  margin-top: 40px; }
