@@ -2,6 +2,13 @@
 const normalSearchButton = document.getElementsByClassName('buttons__search');
 
 normalSearchButton[0].addEventListener('click', makeCORSRequest, false);
+const enterKey = document.querySelector('input');
+
+enterKey.addEventListener('keyup', function(e){
+	if(e.keyCode === 13) {
+		makeCORSRequest();
+	}
+});
 
 function createCORSRequest(method, url) {
 	var request = new XMLHttpRequest();
@@ -17,7 +24,6 @@ function createCORSRequest(method, url) {
 }
 
 function makeCORSRequest(e) {
-	e.preventDefault();
 	const inputText = document.getElementById('search').value.trim();
 	if (!inputText) {
 		return;
@@ -49,16 +55,26 @@ function makeCORSRequest(e) {
 
  function success(responseText){
  	var response = JSON.parse(responseText);
- 	
- 	for(var i = 0; i < 10; ++i) {
- 		let element = document.createElement('a');
- 		element.setAttribute('href', response[3][i]);
- 		element.setAttribute('class', 'main__anchors');
- 		element.setAttribute('target', '_blank');
- 		let block_div = '<div><h3>' + response[1][i] + '</h3><p class="main__paragraphs">' + response[2][i] + '</p></div></a>';
- 		element.innerHTML = block_div;
- 		let div = document.getElementById('main');
- 		div.appendChild(element);
+ 	var mainDiv = document.getElementById('main');
+ 	if (!mainDiv.hasChildNodes()){
+ 		result(mainDiv, response);
+ 	} else {
+ 		mainDiv.innerHTML = "";
+ 		result(mainDiv, response);
  	}
+
+ 	function result(div, response){
+	 	for(var i = 0; i < 10; ++i) {
+	 		let element = document.createElement('a');
+	 		element.setAttribute('href', response[3][i]);
+	 		element.setAttribute('class', 'main__anchors');
+	 		element.setAttribute('target', '_blank');
+	 		let block_div = '<div><h3>' + response[1][i] + '</h3><p class="main__paragraphs">' + response[2][i] + '</p></div></a>';
+	 		element.innerHTML = block_div;
+	 		div.appendChild(element);
+	 	}
+	 }
  }
+
+ 
 
