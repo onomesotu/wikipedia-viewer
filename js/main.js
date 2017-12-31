@@ -1,13 +1,15 @@
 
+//Function to run when DOM is ready
 document.addEventListener('DOMContentLoaded', function(e){
+	// give focus to the input element on page load
 	const input = document.querySelector('#search');
 	input.focus();
 
+	//Add event listener and handler to the search button
 	const normalSearchButton = document.getElementsByClassName('buttons__search');
 	normalSearchButton[0].addEventListener('click', makeCORSRequest, false);
 
-	const headerMargin = document.getElementsByClassName('header__title');
-
+	// Event listener and handler for when the enter key is pressed
 	const enterKey = document.querySelector('input');
 	enterKey.addEventListener('keyup', function(e){
 		if(e.keyCode === 13) {
@@ -15,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function(e){
 		}
 	});
 
+	//Create CORS request and check if it is supported by the users client
 	function createCORSRequest(method, url) {
 		var request = new XMLHttpRequest();
 		if ('withCredentials' in request){
@@ -28,14 +31,16 @@ document.addEventListener('DOMContentLoaded', function(e){
 		return request;
 	}
 
+	//Make CORS request 
 	function makeCORSRequest(e) {
 		const inputText = document.getElementById('search').value.trim();
-		if (!inputText) {
+		if (!inputText) {//Do nothing if input field is empty
 			return;
 		} else {
 			const wikipediaAPI = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + inputText + '&limit=10&namespace=0&origin=*&format=json';
 			const request = createCORSRequest('GET', wikipediaAPI);
 			if(!request) {
+				error('CORS not supported');
 				console.log('CORS not supported');
 				return;
 			}
@@ -45,13 +50,13 @@ document.addEventListener('DOMContentLoaded', function(e){
 					if(this.status >= 200 && this.status <= 400){
 						return success(this.responseText);
 					} else {
-						console.error(this.statusText);
+						error(this.statusText);
 					}
 				}
 			};
 
 			request.onerror = function(e){
-				console.log(request.statusText);
+				error(request.statusText);
 			};
 
 			request.send(null);
@@ -62,7 +67,10 @@ document.addEventListener('DOMContentLoaded', function(e){
 	 	var response = JSON.parse(responseText);
 	 	var mainDiv = document.getElementById('main');
 	 	if (!mainDiv.hasChildNodes()){
+	 		// If content div is empty, call result function
+	 		// Use a smoooth transition to move header from center to the top of the page
 	 		result(mainDiv, response);
+	 		const headerMargin = document.getElementsByClassName('header__title');
 	 		headerMargin[0].style.marginTop = '20px';
 	 	} else {
 	 		mainDiv.innerHTML = "";
@@ -70,6 +78,11 @@ document.addEventListener('DOMContentLoaded', function(e){
 	 	}
 
 	 	function result(div, response){
+	 		//This result function parses the api response.
+	 		//The response contains 10 results hence the loop up until 10
+	 		//In the loop, an <a> element is created and it's attributes set.
+	 		//A div that contains the corresponding title and description of the query result is created and 
+	 		//appended to the <a> element. This is repeated for the 10 query results.
 		 	for(var i = 0; i < 10; ++i) {
 		 		let element = document.createElement('a');
 		 		element.setAttribute('href', response[3][i]);
@@ -80,6 +93,14 @@ document.addEventListener('DOMContentLoaded', function(e){
 		 		div.appendChild(element);
 		 	}
 		 }
+	 }
+
+	 function error(responseText){
+	 	var element = document.createElement('p');
+	 	element.setAttribute('class', 'error text-center');
+	 	element.innerHTML = responseText;
+	 	var main = document.getElementById('main');
+	 	main.innerHTML = element;
 	 }
 });
 
