@@ -78,6 +78,16 @@ document.addEventListener('DOMContentLoaded', function(e){
 	 	}
 
 	 	function result(div, response){
+	 		//Notify user if pages requested does not exist
+	 		if(response[1].length < 10){
+	 			let element = document.createElement('p');
+	 			element.setAttribute('class', 'text-center');
+	 			let inputText = document.getElementById('search').value.trim();
+	 			let text = 'The page \"' + inputText  + '\" does not exist. You can <a href="https://en.wikipedia.org/wiki/Wikipedia:Articles_for_creation" target="_blank">ask for it to be created.</a>';
+	 			element.innerHTML = text;
+	 			div.appendChild(element);
+	 			return;
+	 		}
 	 		//This result function parses the api response.
 	 		//The response contains 10 results hence the loop up until 10
 	 		//In the loop, an <a> element is created and it's attributes set.
