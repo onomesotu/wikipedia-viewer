@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function(e){
 	 		//Notify user if pages requested does not exist
 	 		if(response[1].length < 10){
 	 			let element = document.createElement('p');
-	 			element.setAttribute('class', 'text-center');
+	 			element.setAttribute('class', 'text-center main__error');
 	 			let inputText = document.getElementById('search').value.trim();
 	 			let text = 'The page \"' + inputText  + '\" does not exist. You can <a href="https://en.wikipedia.org/wiki/Wikipedia:Articles_for_creation" target="_blank">ask for it to be created.</a>';
 	 			element.innerHTML = text;

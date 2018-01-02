@@ -390,6 +390,10 @@ html {
   padding-bottom: 10px;
   border-bottom: 1px solid #3DD0F2; }
 
+.main .main__error {
+  font-size: 20px;
+  margin-top: 40px; }
+
 .footer {
   position: relative;
   text-align: center;
