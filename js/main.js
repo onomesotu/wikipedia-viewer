@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function(e){
 		}	
 	}
 
-	 function success(responseText){
+	function success(responseText){
 	 	var response = JSON.parse(responseText);
 	 	var mainDiv = document.getElementById('main');
 	 	if (!mainDiv.hasChildNodes()){
