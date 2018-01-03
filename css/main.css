@@ -379,6 +379,16 @@ html {
 .header .form-control {
   width: 600px;
   margin: 0 auto; }
+  @media screen and (max-width: 650px) {
+    .header .form-control {
+      width: 100%; } }
+
+.header .btn {
+  -webkit-transition: all 0.8s ease-in;
+  transition: all 0.8s ease-in; }
+  .header .btn:hover {
+    background: #F28C6F;
+    color: #FFFFFF; }
 
 .main .main__anchors {
   color: inherit;

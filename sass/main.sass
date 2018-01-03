@@ -23,6 +23,15 @@ html
 	.form-control
 		width: 600px;
 		margin: 0 auto;
+		@media screen and (max-width: 650px)
+			width: 100%;
+			
+	.btn
+		transition: all 0.8s ease-in;
+
+		&:hover
+			background: $buttonHoverColor;
+			color: $buttonFontColor;
 
 .main
 	.main__anchors
